@@ -138,7 +138,7 @@ const ContactForm: React.FC = () => {
       <form 
         name="webinar-registration"
         method="POST"
-        action="/thank-you"
+        action="https://webinar.goconstellation.com/thank-you"
         data-netlify="true"
         data-netlify-honeypot="bot-field"
         onSubmit={handleSubmit}

@@ -13,6 +13,20 @@ const ThankYouPage: React.FC = () => {
   // Scroll to top when component mounts
   useEffect(() => {
     window.scrollTo(0, 0);
+    
+    // Add no-index meta tag
+    const metaRobots = document.createElement('meta');
+    metaRobots.name = 'robots';
+    metaRobots.content = 'noindex, nofollow';
+    document.head.appendChild(metaRobots);
+    
+    // Cleanup function to remove meta tag when component unmounts
+    return () => {
+      const existingMeta = document.querySelector('meta[name="robots"]');
+      if (existingMeta && existingMeta.getAttribute('content') === 'noindex, nofollow') {
+        document.head.removeChild(existingMeta);
+      }
+    };
   }, []);
 
   // Countdown to July 25, 2025 at 12pm noon
