@@ -1,0 +1,30 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Form handling
+[[redirects]]
+  from = "/thank-you"
+  to = "/thank-you"
+  status = 200
+  force = false
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Form submission success redirect
+[[redirects]]
+  from = "/"
+  to = "/thank-you"
+  status = 302
+  conditions = {Role = ["form-submission"]}
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
