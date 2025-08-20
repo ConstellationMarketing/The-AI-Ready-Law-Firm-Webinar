@@ -140,8 +140,16 @@ const ContactForm: React.FC = () => {
         method="POST"
         action="/thank-you"
         data-netlify="true"
+        data-netlify-honeypot="bot-field"
         onSubmit={handleSubmit}
       >
+        <input type="hidden" name="form-name" value="webinar-registration" />
+        <p className="hidden">
+          <label>
+            Don't fill this out if you're human: <input name="bot-field" />
+          </label>
+        </p>
+        
         <div className="text-center mb-6">
           <Calendar className="h-12 w-12 text-primary mx-auto mb-4" />
           <h5 className="text-xl font-heading font-bold text-gray-900 mb-2">
