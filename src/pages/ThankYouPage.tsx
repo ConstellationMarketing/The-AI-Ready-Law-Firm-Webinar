@@ -10,6 +10,11 @@ const ThankYouPage: React.FC = () => {
     seconds: 0,
   });
 
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   // Countdown to July 25, 2025 at 12pm noon
   useEffect(() => {
     const targetDate = new Date('2025-08-29T12:00:00').getTime();

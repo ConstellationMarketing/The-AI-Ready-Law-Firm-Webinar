@@ -14,13 +14,10 @@
     <div id="root"></div>
     
     <!-- Netlify Forms - Hidden form for detection -->
-    <form name="webinar-registration" netlify netlify-honeypot="bot-field" action="/thank-you" hidden>
+    <form name="webinar-registration" netlify action="/thank-you" hidden>
       <input type="text" name="name" />
       <input type="email" name="email" />
       <input type="tel" name="phone" />
-      <input type="text" name="webinar" />
-      <input type="text" name="webinar_date" />
-      <input type="text" name="bot-field" />
     </form>
     
     <script type="module" src="/src/main.tsx"></script>

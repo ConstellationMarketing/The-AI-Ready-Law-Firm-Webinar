@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Calendar, CheckCircle, Clock, AlertCircle } from 'lucide-react';
 
 const ContactForm: React.FC = () => {
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
   });
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   
@@ -54,32 +51,29 @@ const ContactForm: React.FC = () => {
     return cleanPhone.length >= 10 && phoneRegex.test(cleanPhone);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setError(null);
-
-    // Client-side validation
+  const handleSubmit = (e: React.FormEvent) => {
+    // Client-side validation only
     if (!formData.name.trim()) {
+      e.preventDefault();
       setError('Please enter your full name.');
-      setIsSubmitting(false);
       return;
     }
 
     if (!formData.email.trim() || !isValidEmail(formData.email)) {
+      e.preventDefault();
       setError('Please enter a valid email address.');
-      setIsSubmitting(false);
       return;
     }
 
     if (!formData.phone.trim() || !isValidPhone(formData.phone)) {
+      e.preventDefault();
       setError('Please enter a valid phone number.');
-      setIsSubmitting(false);
       return;
     }
 
-    // Let Netlify handle the form submission naturally
-    // The form will submit to Netlify and redirect to /thank-you
+    // If validation passes, let the form submit naturally to Netlify
+    setIsSubmitting(true);
+    setError(null);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -144,24 +138,10 @@ const ContactForm: React.FC = () => {
       <form 
         name="webinar-registration"
         method="POST"
+        action="/thank-you"
         data-netlify="true"
-        data-netlify-honeypot="bot-field"
         onSubmit={handleSubmit}
       >
-        {/* Netlify form detection */}
-        <input type="hidden" name="form-name" value="webinar-registration" />
-        
-        {/* Honeypot field for spam protection */}
-        <div style={{ display: 'none' }}>
-          <label>
-            Don't fill this out if you're human: <input name="bot-field" />
-          </label>
-        </div>
-        
-        {/* Hidden fields for Netlify */}
-        <input type="hidden" name="webinar" value="AI Ready Law Firm Training" />
-        <input type="hidden" name="webinar_date" value="August 29, 2025 at 12:00 PM" />
-        
         <div className="text-center mb-6">
           <Calendar className="h-12 w-12 text-primary mx-auto mb-4" />
           <h5 className="text-xl font-heading font-bold text-gray-900 mb-2">
