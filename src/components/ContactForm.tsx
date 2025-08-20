@@ -52,46 +52,8 @@ const ContactForm: React.FC = () => {
   };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Client-side validation
-    if (!formData.name.trim()) {
-      setError('Please enter your full name.');
-      return;
-    }
-
-    if (!formData.email.trim() || !isValidEmail(formData.email)) {
-      setError('Please enter a valid email address.');
-      return;
-    }
-
-    if (!formData.phone.trim() || !isValidPhone(formData.phone)) {
-      setError('Please enter a valid phone number.');
-      return;
-    }
-
-    // If validation passes, submit the form manually
+    // Let Netlify handle the form submission natively
     setIsSubmitting(true);
-    setError(null);
-    
-    // Create form data and submit
-    const form = e.target as HTMLFormElement;
-    const formDataToSubmit = new FormData(form);
-    
-    fetch('/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(formDataToSubmit as any).toString()
-    })
-    .then(() => {
-      // Redirect to external thank you page
-      window.location.href = 'https://webinar.goconstellation.com/thank-you';
-    })
-    .catch((error) => {
-      console.error('Form submission error:', error);
-      setError('There was an error submitting the form. Please try again.');
-      setIsSubmitting(false);
-    });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -156,10 +118,9 @@ const ContactForm: React.FC = () => {
       <form 
         name="webinar-registration"
         method="POST"
-        action="https://webinar.goconstellation.com/thank-you"
         data-netlify="true"
         data-netlify-honeypot="bot-field"
-       data-netlify-redirect="https://webinar.goconstellation.com/thank-you"
+        action="https://webinar.goconstellation.com/thank-you"
         onSubmit={handleSubmit}
       >
         <input type="hidden" name="form-name" value="webinar-registration" />
