@@ -2,11 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Calendar, CheckCircle, Clock, AlertCircle } from 'lucide-react';
 
 const ContactForm: React.FC = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-  });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   
@@ -38,33 +33,9 @@ const ContactForm: React.FC = () => {
     return () => clearInterval(timer);
   }, []);
 
-  // Email validation helper
-  const isValidEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
-  // Phone validation helper
-  const isValidPhone = (phone: string) => {
-    const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
-    const cleanPhone = phone.replace(/[\s\-\(\)\.]/g, '');
-    return cleanPhone.length >= 10 && phoneRegex.test(cleanPhone);
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
-    // Let Netlify handle the form submission natively
     setIsSubmitting(true);
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-    // Clear error when user starts typing
-    if (error) {
-      setError(null);
-    }
+    // Let the form submit naturally to Netlify
   };
 
   return (
@@ -150,8 +121,6 @@ const ContactForm: React.FC = () => {
               id="name"
               name="name"
               required
-              value={formData.name}
-              onChange={handleChange}
               disabled={isSubmitting}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors font-body disabled:opacity-50 disabled:cursor-not-allowed"
               placeholder="Your full name"
@@ -167,8 +136,6 @@ const ContactForm: React.FC = () => {
               id="phone"
               name="phone"
               required
-              value={formData.phone}
-              onChange={handleChange}
               disabled={isSubmitting}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors font-body disabled:opacity-50 disabled:cursor-not-allowed"
               placeholder="(555) 123-4567"
@@ -184,8 +151,6 @@ const ContactForm: React.FC = () => {
               id="email"
               name="email"
               required
-              value={formData.email}
-              onChange={handleChange}
               disabled={isSubmitting}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors font-body disabled:opacity-50 disabled:cursor-not-allowed"
               placeholder="your@email.com"
